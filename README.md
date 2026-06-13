@@ -81,7 +81,7 @@ FROM DeptEducationAttrition
 WHERE total_staff > 5;
 ```
 
-# Key Insights & Recommendations
+## Key Insights & Recommendations
 1. Address Commute Burnout: Employees living 16+ miles away exhibit a significantly higher attrition rate. Recommendation: Introduce hybrid/remote options for high-distance roles.
 2. Sales Department Focus: The Sales department holds the highest turnover rate structurally. Recommendation: Review commission structures and sales target distributions.
 3. Targeted Retaining Policies: The highest risk ranks belong to early-career fields. Recommendation: Implement clearer mentorship structures for junior employees in high-turnover educational tracks.
