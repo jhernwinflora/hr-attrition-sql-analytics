@@ -29,7 +29,7 @@ The dataset tracks several key employee metrics, including:
 
 ## 🔍 Key Questions Answered & SQL Scripts
 ```sql
--- Database Setup & Schema
+1. Database Setup & Schema
 create table hr_attrition
 	(
 		Age int,
@@ -44,14 +44,14 @@ create table hr_attrition
 		EmployeeNumber int primary key
 	)
     
--- Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
+2. What percentage of the workforce has left?
 SELECT 
     COUNT(*) AS total_employees,
     SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS total_attrition,
     ROUND((SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 2) AS attrition_rate_percentage
 FROM hr_attrition;
 
--- Are people leaving the company as a whole, or is there a toxic culture/burnout in a specific department?
+3. Are people leaving the company as a whole, or is there a toxic culture/burnout in a specific department?
 SELECT 
     Department,
     COUNT(*) AS total_employees,
@@ -61,7 +61,7 @@ FROM hr_attrition
 GROUP BY Department
 ORDER BY attrition_rate DESC;
 
--- Does a long commute drive people to quit? Let's bucket the distances to find out.
+4. Does a long commute drive people to quit? Let's bucket the distances to find out.
 SELECT 
     CASE 
         WHEN DistanceFromHome <= 5 THEN 'Near (0-5 miles)'
@@ -75,7 +75,7 @@ FROM hr_attrition
 GROUP BY 1
 ORDER BY attrition_rate DESC;
 
--- Are we losing young talent or seasoned veterans?
+5. Are we losing young talent or seasoned veterans?
 SELECT 
     CONCAT(FLOOR(Age / 10) * 10, '-', (FLOOR(Age / 10) * 10) + 9) AS age_group,
     COUNT(*) AS total_employees,
@@ -88,7 +88,7 @@ FROM hr_attrition
 GROUP BY FLOOR(Age / 10)
 ORDER BY age_group;
 
--- Does frequent travel correlate with higher attrition?
+6. Does frequent travel correlate with higher attrition?
 SELECT 
     BusinessTravel,
     COUNT(*) AS total_employees,
