@@ -29,7 +29,7 @@ The dataset tracks several key employee metrics, including:
 
 ## 🔍 Key Questions Answered & SQL Scripts
 
-### 1. What is the organization's baseline attrition rate?
+### 1. Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
 ```sql
 SELECT 
     COUNT(*) AS total_employees,
@@ -37,7 +37,7 @@ SELECT
     ROUND((SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 2) AS attrition_rate_percentage
 FROM hr_attrition;
 
-2. Which departments are experiencing the highest turnover?
+2. Are people leaving the company as a whole, or is there a toxic culture/burnout in a specific department?
 SELECT 
     Department,
     COUNT(*) AS total_employees,
@@ -47,7 +47,7 @@ FROM hr_attrition
 GROUP BY Department
 ORDER BY attrition_rate DESC;
 
-3. Does a long commute correlate with higher attrition?
+3. Does a long commute drive people to quit? Let's bucket the distances to find out.
 SELECT 
     CASE 
         WHEN DistanceFromHome <= 5 THEN 'Near (0-5 miles)'
@@ -61,7 +61,33 @@ FROM hr_attrition
 GROUP BY 1
 ORDER BY attrition_rate DESC;
 
-4. Which specific education backgrounds face the highest risk within each department? (Advanced Risk-Ranking)
+4. Are we losing young talent or seasoned veterans?
+SELECT 
+    CONCAT(FLOOR(Age / 10) * 10, '-', (FLOOR(Age / 10) * 10) + 9) AS age_group,
+    COUNT(*) AS total_employees,
+    SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS attrition_count,
+    ROUND(
+        (SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 
+        2
+    ) AS attrition_rate
+FROM hr_attrition
+GROUP BY FLOOR(Age / 10)
+ORDER BY age_group;
+
+5. Does frequent travel correlate with higher attrition?
+SELECT 
+    BusinessTravel,
+    COUNT(*) AS total_employees,
+    SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS attrition_count,
+    ROUND(
+        (SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 
+        2
+    ) AS attrition_rate
+FROM hr_attrition
+GROUP BY BusinessTravel
+ORDER BY attrition_rate DESC;
+
+6.. Which specific education backgrounds face the highest risk within each department? (Advanced Risk-Ranking)
 WITH DeptEducationAttrition AS (
     SELECT 
         Department,
