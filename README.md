@@ -79,6 +79,7 @@ SELECT
     RANK() OVER (PARTITION BY Department ORDER BY attrition_rate DESC) AS risk_rank
 FROM DeptEducationAttrition
 WHERE total_staff > 5;
+```
 
 ##Key Insights & Recommendations
 1. Address Commute Burnout: Employees living 16+ miles away exhibit a significantly higher attrition rate. Recommendation: Introduce hybrid/remote options for high-distance roles.
