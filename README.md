@@ -82,4 +82,4 @@ SELECT
     RANK() OVER (PARTITION BY Department ORDER BY attrition_rate DESC) AS risk_rank
 FROM DeptEducationAttrition
 WHERE total_staff > 5;
-```
+
