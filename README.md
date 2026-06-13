@@ -28,9 +28,23 @@ The dataset tracks several key employee metrics, including:
 ---
 
 ## 🔍 Key Questions Answered & SQL Scripts
-
--- Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
 ```sql
+-- Database Setup & Schema
+create table hr_attrition
+	(
+		Age int,
+		Attrition varchar (10),
+		BusinessTravel varchar(30),
+		DailyRate int,
+		Department varchar(30),
+		DistanceFromHome int,
+		Education int,
+		EducationField varchar(30),
+		EmployeeCount int,
+		EmployeeNumber int primary key
+	)
+    
+-- Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
 SELECT 
     COUNT(*) AS total_employees,
     SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS total_attrition,
