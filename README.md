@@ -29,7 +29,7 @@ The dataset tracks several key employee metrics, including:
 
 ## 🔍 Key Questions Answered & SQL Scripts
 
-### 1. Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
+1. Before diving deep, HR needs to know the baseline. What percentage of the workforce has left?
 ```sql
 SELECT 
     COUNT(*) AS total_employees,
