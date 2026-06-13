@@ -37,8 +37,7 @@ SELECT
     ROUND((SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0) / COUNT(*), 2) AS attrition_rate_percentage
 FROM hr_attrition;
 
-### 2. Which departments are experiencing the highest turnover?
-```sql
+2. Which departments are experiencing the highest turnover?
 SELECT 
     Department,
     COUNT(*) AS total_employees,
@@ -48,8 +47,7 @@ FROM hr_attrition
 GROUP BY Department
 ORDER BY attrition_rate DESC;
 
-### 3. Does a long commute correlate with higher attrition?
-```sql
+3. Does a long commute correlate with higher attrition?
 SELECT 
     CASE 
         WHEN DistanceFromHome <= 5 THEN 'Near (0-5 miles)'
@@ -63,8 +61,7 @@ FROM hr_attrition
 GROUP BY 1
 ORDER BY attrition_rate DESC;
 
-### 4. Which specific education backgrounds face the highest risk within each department? (Advanced Risk-Ranking)
-```sql
+4. Which specific education backgrounds face the highest risk within each department? (Advanced Risk-Ranking)
 WITH DeptEducationAttrition AS (
     SELECT 
         Department,
